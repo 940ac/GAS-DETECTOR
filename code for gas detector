@@ -1,0 +1,42 @@
+// GAS DETECTOR
+
+int Input = A0;
+int R_LED = 2;
+int G_LED = 3;
+int Buzzer = 4;
+
+// Threshold for gas detection
+int MAX = 200;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(Input ,INPUT);
+  pinMode(R_LED ,OUTPUT);
+  pinMode(G_LED ,OUTPUT);
+  pinMode(Buzzer ,OUTPUT);
+}
+
+void loop() {
+  // Read analog input from gas sensor
+  int val = analogRead(Input);
+  
+  // Print the analog value to the serial monitor
+  Serial.print("Analog Value: ");
+  Serial.println(val);
+
+  // Check if gas concentration exceeds threshold
+  if (val >= MAX) {
+    digitalWrite(R_LED ,HIGH);
+    digitalWrite(Buzzer ,HIGH);
+    digitalWrite(G_LED ,LOW);
+    Serial.println("GAS LEAKING");
+  } else {
+    digitalWrite(R_LED ,LOW);
+    digitalWrite(Buzzer ,LOW);
+    digitalWrite(G_LED ,HIGH);
+    Serial.println("NORMAL");
+  }
+
+  // Delay to stabilize readings
+  delay(1000);
+}
